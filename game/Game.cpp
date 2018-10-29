@@ -5,45 +5,42 @@ Game::Game() : m_events(30)
 	int screen_width = 1024;
 	int screen_height = 768;
 
-	m_systems.input = std::move(std::make_unique<axe::InputHandler>());
-
-	std::string windName = "axeLib v0.5.0 Test";
-	m_draw.createWindow(screen_width, screen_height, windName);
-	m_draw.getWindow().registerForEvents(m_events.getEventQueue());
-
-	m_draw.fonts.setPathToResources("res/fonts/");
-	m_draw.bitmaps.setPathToResources("res/textures/");
+	std::string windName = "The 21st Floor";
+	m_draw.createWindow(screen_width, screen_height, m_events.getEventQueue(), ALLEGRO_FULLSCREEN_WINDOW).setWindowTitle(windName);
 }
 
-int Game::run()
+void Game::run()
 {
-	bool running = true;
-	int result = 1;
-
+	axe::Timer t;
 	m_events.startTimer();
-	while (running)
+	while (m_states.running())
 	{
 		if (m_events.handleEvents())
 		{
-			m_systems.input->getInput(m_events.getEvent());
+			m_draw.handleEvents(m_events.getEvent());
+
+			m_input.getInput(m_events.getEvent());
 
 			if (m_events.eventIs(ALLEGRO_EVENT_DISPLAY_CLOSE))
 			{
-				result = 0;
-				running = false;
+				m_states.quit();
 			}
 			else if (m_events.eventIs(ALLEGRO_EVENT_TIMER))
 			{
 				// tick
 			}
+
+			if (m_input.isKeyPressed(ALLEGRO_KEY_ESCAPE))
+			{
+				m_states.quit();
+			}
 		}
 
 		if (m_events.eventQueueEmpty())
 		{
-			m_draw.flipAndClear(al_map_rgb(0, 0, 0));
+			axe::flipAndClear(al_map_rgb(0, 0, 0));
 		}
 	}
-	return result;
 }
 
 Game::~Game()
