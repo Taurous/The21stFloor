@@ -6,7 +6,7 @@ Game::Game() : m_events(30)
 	int screen_height = 768;
 
 	std::string windName = "The 21st Floor";
-	m_draw.createWindow(screen_width, screen_height, m_events.getEventQueue(), ALLEGRO_FULLSCREEN_WINDOW).setWindowTitle(windName);
+	m_draw.createWindow(screen_width, screen_height, m_events.getEventQueue(), ALLEGRO_RESIZABLE).setWindowTitle(windName).setWindowIcon("nicestboy.png");
 }
 
 void Game::run()
@@ -33,6 +33,10 @@ void Game::run()
 			if (m_input.isKeyPressed(ALLEGRO_KEY_ESCAPE))
 			{
 				m_states.quit();
+			}
+			else if (m_input.isKeyPressed(ALLEGRO_KEY_SPACE))
+			{
+				m_draw.getWindow().setFullscreen(!m_draw.getWindow().getFullscreen());
 			}
 		}
 
