@@ -1,8 +1,8 @@
 #pragma once
 
-#include <axeLib/AbstractState.h>
+#include <axeLib/StateManager.h>
 
-#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro.h>
 
 class GameState : public axe::AbstractState
 {
@@ -16,4 +16,7 @@ public:
 	void handleEvents();
 	void update();
 	void draw();
+
+private:
+
 };
