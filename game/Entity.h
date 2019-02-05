@@ -4,10 +4,10 @@
 
 struct Entity
 {
-	vec2 pos;
-	vec2 speed;
-	vec2 accel;
-	float angle;
-	bool alive;
-	float alpha;
+	vec2 pos; // 16
+	vec2 speed; // 16
+	vec2 accel; // 16
+	float angle; // 4
+	float alpha; // 4
+	bool alive; // 1
 };

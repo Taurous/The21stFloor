@@ -23,6 +23,5 @@ private:
 	std::vector<Entity> entities;
 	bool moving;
 	int num_alive;
-
-	ALLEGRO_BITMAP *bmp;
+	axe::Timer t;
 };
