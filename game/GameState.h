@@ -4,6 +4,8 @@
 
 #include <allegro5/allegro.h>
 
+#include "Entity.h"
+
 class GameState : public axe::AbstractState
 {
 public:
@@ -14,9 +16,13 @@ public:
 	void resume();
 
 	void handleEvents();
-	void update();
+	void update(unsigned long long deltaTime);
 	void draw();
 
 private:
+	std::vector<Entity> entities;
+	bool moving;
+	int num_alive;
 
+	ALLEGRO_BITMAP *bmp;
 };

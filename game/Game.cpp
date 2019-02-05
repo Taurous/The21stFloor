@@ -2,7 +2,7 @@
 
 #include "GameState.h"
 
-Game::Game() : m_events(5)
+Game::Game() : m_events(60)
 {
 	int screen_width = 1024;
 	int screen_height = 768;
@@ -11,11 +11,17 @@ Game::Game() : m_events(5)
 	m_draw.createWindow(screen_width, screen_height, m_events.getEventQueue(), false).setWindowTitle(windName);
 
 	m_states.changeState(std::unique_ptr<axe::AbstractState>(new GameState(m_states, m_input, m_events, m_draw)));
+
+	al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 }
 
 void Game::run()
 {
 	bool redraw = false;
+	
+	axe::Timer t;
+	t.start();
+
 	m_events.startTimer();
 	while (m_states.running())
 	{
@@ -33,7 +39,7 @@ void Game::run()
 			}
 			else if (m_events.eventIs(ALLEGRO_EVENT_TIMER))
 			{
-				m_states.update();
+				m_states.update((unsigned long long)t.restart().count());
 				redraw = true;
 			}
 
